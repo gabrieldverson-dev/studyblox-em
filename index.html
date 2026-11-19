@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Início - StudyBlox (Ensino Médio 2° e 3° Ano)</title>
+  <meta name="description" content="Plataforma completa de estudos gratuitos pelo YouTube para 2° e 3° ano do Ensino Médio com layout fiel ao aplicativo do Roblox: 44 semanas de Janeiro a Novembro, metas de questões, simulados aos sábados, domingo de descanso e canais Parabólica, Débora Aladim, Luma e Ponto e Thais Formagio." />
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style id="studyblox-css">
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #232527;
+      color: #FFFFFF;
+      font-family: "HCo Gotham SSm", "Builder Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+      min-height: 100vh;
+    }
+
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+
+    /* Exact Roblox Web/App Topbar (#191B1D) */
+    .rbx-header {
+      background-color: #191B1D;
+      border-bottom: 1px solid #111214;
+      height: 44px;
+    }
+
+    /* Promo / Week Status Strip right below topbar */
+    .rbx-promo-strip {
+      background: linear-gradient(90deg, #151719 0%, #242933 35%, #1F262E 65%, #151719 100%);
+      border-bottom: 1px solid #121315;
+    }
+
+    /* Centered Roblox Feed Container (matches reference proportions) */
+    .rbx-container {
+      max-width: 970px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Square 1:1 Roblox Game Tile */
+    .game-tile {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .game-cover {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      background: #191B1D;
+      transition: filter 0.14s ease, transform 0.14s ease;
+    }
+    .game-tile:hover .game-cover {
+      filter: brightness(1.08);
+    }
+    .game-title {
+      margin-top: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.25;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .game-tile:hover .game-title {
+      text-decoration: underline;
+    }
+    .game-meta {
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #BDBEC0;
+      font-weight: 500;
+    }
+
+    /* Roblox Circular Friend / Creator Avatar */
+    .creator-circle {
+      width: 84px;
+      height: 84px;
+      border-radius: 9999px;
+      background: #D6D8DB;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      transition: filter 0.15s ease;
+    }
+    .creator-item:hover .creator-circle { filter: brightness(1.06); }
+    .creator-badge {
+      position: absolute;
+      right: 1px;
+      bottom: 1px;
+      width: 22px;
+      height: 22px;
+      border-radius: 9999px;
+      border: 2.5px solid #232527;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+    }
+
+    /* Roblox Dark Card & Modal */
+    .rbx-surface {
+      background-color: #191B1D;
+      border: 1px solid #35373A;
+      border-radius: 8px;
+    }
+    .rbx-panel {
+      background-color: #2B2D30;
+      border: 1px solid #393B3D;
+      border-radius: 8px;
+    }
+
+    /* Iconic Roblox Buttons */
+    .rbx-play-btn {
+      background-color: #00B06F;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: background-color 0.15s ease;
+    }
+    .rbx-play-btn:hover { background-color: #00C47C; }
+
+    .rbx-btn {
+      background-color: #393B3D;
+      color: #FFFFFF;
+      border: 1px solid #4A4D50;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background-color 0.14s ease;
+    }
+    .rbx-btn:hover { background-color: #4A4D50; }
+
+    .rbx-btn-white {
+      background-color: #FFFFFF;
+      color: #191B1D;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      transition: background-color 0.14s ease;
+    }
+    .rbx-btn-white:hover { background-color: #E6E7E9; }
+
+    /* Top Nav Links */
+    .top-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: #FFFFFF;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background-color 0.14s ease;
+    }
+    .top-link:hover { background-color: #2B2D30; }
+    .top-link.active { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+
+    /* Roblox Hollow Tilted Square Logo */
+    .rbx-logo {
+      width: 24px;
+      height: 24px;
+      border: 5px solid #FFFFFF;
+      border-radius: 3px;
+      transform: rotate(15deg);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .rbx-logo::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      background: #191B1D;
+    }
+
+    /* Inputs */
+    input, select, textarea {
+      background-color: #111214;
+      color: #FFFFFF;
+      border: 1px solid #3D3F42;
+      border-radius: 8px;
+    }
+    input::placeholder, textarea::placeholder { color: #8A8C8F; }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #FFFFFF;
+    }
+
+    /* Scrollbars */
+    .rbx-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+    .rbx-scroll::-webkit-scrollbar-track { background: transparent; }
+    .rbx-scroll::-webkit-scrollbar-thumb { background: #3E4044; border-radius: 99px; }
+
+    /* Bottom-Right Floating Chat / Notes Dock (exact reference match!) */
+    .rbx-chat-dock {
+      position: fixed;
+      right: 16px;
+      bottom: 0;
+      z-index: 45;
+      width: 270px;
+      background: #191B1D;
+      border: 1px solid #393B3D;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.45);
+    }
+  </style>
+</head>
+<body class="antialiased pb-16">
+
+  <!-- ==================== 1. TOP BAR (EXACT ROBLOX STYLE) ==================== -->
+  <header class="rbx-header sticky top-0 z-40 px-3 flex items-center justify-between gap-2">
+    <!-- Left: Hamburger + Tilted Logo + Horizontal Links -->
+    <div class="flex items-center gap-1 sm:gap-2 min-w-0">
+      <button type="button" onclick="toggleDrawer()" class="p-1.5 rounded hover:bg-[#2B2D30] text-white cursor-pointer shrink-0" aria-label="Abrir menu">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <button type="button" onclick="switchTab('cronograma')" class="p-1.5 flex items-center cursor-pointer shrink-0" title="Início">
+        <div class="rbx-logo"></div>
+      </button>
+
+      <nav class="hidden md:flex items-center gap-1 ml-1" aria-label="Menu principal">
+        <button id="top-mapa" type="button" onclick="switchTab('mapa')" class="top-link">Descobrir</button>
+        <button id="top-simulados" type="button" onclick="switchTab('simulados')" class="top-link">Simulados</button>
+        <button id="top-canais" type="button" onclick="switchTab('canais')" class="top-link">Canais</button>
+        <button id="top-erros" type="button" onclick="switchTab('erros')" class="top-link">Redação &amp; Erros</button>
+        <button id="top-metodo" type="button" onclick="switchTab('metodo')" class="top-link">Pomodoro</button>
+      </nav>
+    </div>
+
+    <!-- Center: Compact Dark Roblox Search Bar -->
+    <div class="flex-1 max-w-sm mx-2">
+      <div class="relative">
+        <svg class="w-3.5 h-3.5 text-[#9B9DA0] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="global-search" type="search" oninput="onGlobalSearch(this.value)" placeholder="Pesquisar" class="w-full pl-8 pr-3 py-1 text-xs bg-[#0E0F11] border-[#393B3D] focus:border-white rounded-md" />
+      </div>
+    </div>
+
+    <!-- Right: Avatar + @estudante + Grade Toggle + Bell + Questions(Robux) + Gear -->
+    <div class="flex items-center gap-2 sm:gap-2.5 shrink-0 text-xs">
+      <!-- User + Grade Click-Toggle -->
+      <button type="button" onclick="toggleGradeQuick()" class="hidden sm:flex items-center gap-1.5 px-1.5 py-1 rounded hover:bg-[#2B2D30] cursor-pointer" title="Clique para alternar entre 2° Ano e 3° Ano">
+        <span class="w-6 h-6 rounded-full bg-[#D6D8DB] text-[#191B1D] font-extrabold text-[10px] flex items-center justify-center">EU</span>
+        <span class="font-semibold text-white">@estudante</span>
+        <span id="header-grade-tag" class="text-[11px] font-bold text-[#BDBEC0]">3°EM</span>
+      </button>
+
+      <!-- Bell (Quick jump to Saturday Simulado) -->
+      <button type="button" onclick="switchTab('simulados')" class="p-1.5 rounded hover:bg-[#2B2D30] text-white relative cursor-pointer" title="Simulados de Sábado">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+        <span class="w-2 h-2 rounded-full bg-[#00B06F] absolute top-1 right-1"></span>
+      </button>
+
+      <!-- Robux-style Hexagon + Total Questions Solved -->
+      <button type="button" onclick="switchTab('mapa')" class="flex items-center gap-1 px-1.5 py-1 rounded hover:bg-[#2B2D30] cursor-pointer" title="Total de questões resolvidas no ano">
+        <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2"/><rect x="9.5" y="9.5" width="5" height="5" fill="currentColor"/></svg>
+        <span id="header-questions-done" class="font-bold text-white tabular-nums">0</span>
+      </button>
+
+      <!-- Gear Icon (Settings / Backup / Grade) -->
+      <button id="btn-backup" type="button" onclick="openBackupModal()" class="p-1.5 rounded hover:bg-[#2B2D30] text-white cursor-pointer" title="Configurações, Série e Backup">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== 2. COMPACT TOP STATUS BANNER (LIKE "Explore Roblox in our Desktop app!") ==================== -->
+  <div id="top-promo-banner" class="rbx-promo-strip px-4 py-2.5 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs relative">
+    <div class="w-8 h-8 rounded-lg bg-[#191B1D] border border-[#3E4044] flex items-center justify-center shrink-0">
+      <div class="w-4 h-4 border-[3px] border-white rounded-[2px] rotate-[15deg]"></div>
+    </div>
+    <div class="leading-tight">
+      <div id="banner-week-title" class="font-extrabold text-white text-xs sm:text-sm">Semana 1 — Janeiro • Fase 1: Base Sólida</div>
+      <div id="banner-week-sub" class="text-[11px] text-[#BDBEC0]">Progresso anual: 0% • Meta da semana: 259 questões + Redação • Domingo: Descanso</div>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <button type="button" onclick="changeWeek(-1)" class="rbx-btn px-2 py-1 text-xs cursor-pointer" title="Semana anterior">←</button>
+      <select id="select-week" onchange="selectWeek(Number(this.value))" class="px-2.5 py-1 text-xs font-bold bg-[#191B1D] border-[#4A4D50] cursor-pointer" aria-label="Escolher semana"></select>
+      <button type="button" onclick="changeWeek(1)" class="rbx-btn px-2 py-1 text-xs cursor-pointer" title="Próxima semana">→</button>
+      <button type="button" onclick="switchTab('simulados')" class="rbx-btn-white px-3.5 py-1 text-xs ml-1 cursor-pointer">Simulado</button>
+    </div>
+    <button type="button" onclick="document.getElementById('top-promo-banner').classList.add('hidden')" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9B9DA0] hover:text-white text-sm cursor-pointer hidden sm:block" title="Ocultar barra">✕</button>
+  </div>
+
+  <!-- ==================== SLIDE-OUT HAMBURGER DRAWER ==================== -->
+  <div id="side-drawer" class="hidden fixed inset-0 z-50 bg-black/60" onclick="toggleDrawer()">
+    <aside class="w-60 h-full bg-[#191B1D] border-r border-[#35373A] p-3 flex flex-col justify-between" onclick="event.stopPropagation()">
+      <div class="space-y-1">
+        <div class="flex items-center justify-between px-2 pb-3 mb-2 border-b border-[#2F3134]">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-full bg-[#D6D8DB] text-[#191B1D] font-extrabold text-xs flex items-center justify-center">EU</span>
+            <div>
+              <div class="text-xs font-bold text-white">@estudante</div>
+              <div id="drawer-grade-sub" class="text-[11px] text-[#00C47C] font-semibold">3° Ano EM</div>
+            </div>
+          </div>
+          <button type="button" onclick="toggleDrawer()" class="text-[#9B9DA0] hover:text-white text-sm px-1.5 cursor-pointer">✕</button>
+        </div>
+        <button type="button" onclick="switchTab('cronograma');toggleDrawer()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-[#2B2D30] cursor-pointer">Início</button>
+        <button type="button" onclick="switchTab('mapa');toggleDrawer()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-[#2B2D30] cursor-pointer">Descobrir (Jan–Nov)</button>
+        <button type="button" onclick="switchTab('simulados');toggleDrawer()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-[#2B2D30] cursor-pointer">Simulados (Sábados)</button>
+        <button type="button" onclick="switchTab('canais');toggleDrawer()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-[#2B2D30] cursor-pointer">Canais YouTube</button>
+        <button type="button" onclick="switchTab('erros');toggleDrawer()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-[#2B2D30] cursor-pointer">Caderno de Erros &amp; Redação</button>
+        <button type="button" onclick="switchTab('metodo');toggleDrawer()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-[#2B2D30] cursor-pointer">Pomodoro &amp; Método</button>
+      </div>
+      <div class="pt-3 border-t border-[#2F3134] space-y-2 text-xs">
+        <div class="flex gap-1.5">
+          <button id="drawer-g2" type="button" onclick="setGrade('2')" class="flex-1 py-1.5 rounded font-bold cursor-pointer">2° Ano</button>
+          <button id="drawer-g3" type="button" onclick="setGrade('3')" class="flex-1 py-1.5 rounded font-bold cursor-pointer">3° Ano</button>
+        </div>
+        <button type="button" onclick="toggleDrawer();openBackupModal()" class="rbx-btn w-full py-1.5 cursor-pointer">Backup (.json)</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ==================== MAIN CONTENT (CENTERED LIKE REFERENCE) ==================== -->
+  <main class="rbx-container py-5 space-y-7">
+
+    <!-- ==================== VIEW 1: INÍCIO (EXACT ROBLOX HOME FEED) ==================== -->
+    <section id="view-cronograma" class="space-y-6">
+      <!-- Page Heading: "Início" -->
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h1 class="text-2xl sm:text-[28px] font-extrabold tracking-tight text-white">Início</h1>
+        <!-- Quick Month & Day Bar -->
+        <div class="flex flex-wrap items-center gap-1.5 text-xs" id="day-pills"></div>
+      </div>
+
+      <!-- ROW 1: "Canais (9)" — EXACT REPLICA OF "Friends (178)" -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <h2 class="text-base sm:text-lg font-extrabold text-white">Canais <span class="text-[#BDBEC0] font-semibold">(9)</span></h2>
+          <button type="button" onclick="switchTab('canais')" class="text-xs font-bold text-[#FFFFFF] hover:underline cursor-pointer">Ver todos →</button>
+        </div>
+        <div id="home-creators-row" class="flex items-start gap-4 overflow-x-auto rbx-scroll pb-1"></div>
+      </div>
+
+      <!-- ROW 2: "Continuar" — TODAY'S STUDY EXPERIENCES (SQUARE 1:1 COVERS!) -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex flex-wrap items-baseline gap-2">
+            <h2 id="continue-heading" class="text-base sm:text-lg font-extrabold text-white">Continuar</h2>
+            <span id="continue-sub" class="text-xs text-[#BDBEC0]"></span>
+          </div>
+          <button type="button" onclick="switchTab('mapa')" class="text-xs font-bold text-[#FFFFFF] hover:underline cursor-pointer shrink-0">Ver todos →</button>
+        </div>
+        <div id="continue-grid"></div>
+      </div>
+
+      <!-- ROW 3: "Atividades da Semana" — EXACT REPLICA OF "Friend Activity" (6 SQUARE 1:1 COVERS!) -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex flex-wrap items-baseline gap-2">
+            <h2 id="activity-heading" class="text-base sm:text-lg font-extrabold text-white">Atividades da Semana</h2>
+            <span id="activity-sub" class="text-xs text-[#BDBEC0]"></span>
+          </div>
+          <button type="button" onclick="switchTab('mapa')" class="text-xs font-bold text-[#FFFFFF] hover:underline cursor-pointer shrink-0">Ver todos →</button>
+        </div>
+        <div id="week-activity-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3.5"></div>
+      </div>
+
+      <!-- ROW 4: "Simulados de Sábado (Jan–Nov)" — SQUARE 1:1 COVERS -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex flex-wrap items-baseline gap-2">
+            <h2 class="text-base sm:text-lg font-extrabold text-white">Simulados de Sábado</h2>
+            <span class="text-xs text-[#BDBEC0]">Janeiro a Novembro • Provas progressivas</span>
+          </div>
+          <button type="button" onclick="switchTab('simulados')" class="text-xs font-bold text-[#FFFFFF] hover:underline cursor-pointer shrink-0">Ver todos →</button>
+        </div>
+        <div id="home-simulados-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3.5"></div>
+      </div>
+
+      <!-- Compact Month Strip at Bottom of Home -->
+      <div class="pt-2 border-t border-[#35373A] flex flex-wrap items-center justify-between gap-2">
+        <span class="text-xs font-bold text-[#BDBEC0]">Pular para o mês:</span>
+        <div id="month-pills" class="flex items-center gap-1.5 overflow-x-auto rbx-scroll"></div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: DESCOBRIR (MAPA ANUAL JAN–NOV) ==================== -->
+    <section id="view-mapa" class="hidden space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 class="text-2xl font-extrabold text-white">Descobrir</h1>
+          <p class="text-xs text-[#BDBEC0]">Todas as 44 semanas (Janeiro a Novembro) • 748 exp
