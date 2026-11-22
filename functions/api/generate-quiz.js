@@ -1,4 +1,7 @@
-import { ActiveReviewError, generateActiveReview } from '../../lib/generate-quiz-service.mjs';
+import { GoogleGenAI, Type } from '../../lib/vendor/google-genai-edge.mjs';
+import { ActiveReviewError, createActiveReviewGenerator } from '../../lib/generate-quiz-core.mjs';
+
+const { generateActiveReview } = createActiveReviewGenerator({ GoogleGenAI, Type });
 
 const JSON_HEADERS = {
   'Content-Type': 'application/json; charset=utf-8',
