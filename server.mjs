@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ActiveReviewError, generateActiveReview } from './lib/generate-quiz-service.mjs';
+import { ActiveReviewError, DEFAULT_GEMINI_MODEL, generateActiveReview } from './lib/generate-quiz-service.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const MAX_BODY_BYTES = 64 * 1024;
@@ -89,6 +89,20 @@ export function createAppServer() {
   return http.createServer(async (req, res) => {
     const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
     const pathname = url.pathname;
+
+    if (pathname === '/api/health') {
+      if (req.method !== 'GET' && req.method !== 'HEAD') {
+        sendJson(res, 405, { error: 'Método não permitido. Use GET.', code: 'METHOD_NOT_ALLOWED' });
+        return;
+      }
+      sendJson(res, 200, {
+        ok: true,
+        service: 'aprova-estudos-api',
+        aiConfigured: Boolean(String(process.env.GEMINI_API_KEY || '').trim()),
+        defaultModel: String(process.env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL).trim() || DEFAULT_GEMINI_MODEL
+      });
+      return;
+    }
 
     if (pathname === '/api/generate-quiz') {
       if (req.method === 'OPTIONS') {
