@@ -6,19 +6,37 @@
   <title>Início - StudyBlox (Ensino Médio 2° e 3° Ano)</title>
   <meta name="theme-color" content="#191B1D" />
   <style>
-    body{margin:0;background:#191B1D;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center}
-    .spin{width:34px;height:34px;border:4px solid #393B3D;border-top-color:#00B06F;border-radius:50%;animation:s .8s linear infinite;margin:0 auto 12px}
-    @keyframes s{to{transform:rotate(360deg)}}
+    *{box-sizing:border-box}
+    body{margin:0;background:#191B1D;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;overflow:hidden}
+    .ld-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px;animation:ldIn .45s cubic-bezier(.22,1,.36,1) both}
+    .ld-orb{position:relative;width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#00B06F 0%,#00D9F5 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 32px rgba(0,176,111,.36);animation:ldFloat 1.8s ease-in-out infinite}
+    .ld-orb::after{content:"";position:absolute;inset:-6px;border-radius:22px;border:2px solid rgba(0,196,124,.35);animation:ldPulse 1.8s cubic-bezier(0,0,.2,1) infinite}
+    .ld-mark{width:28px;height:28px;border:6px solid #fff;border-radius:5px;transform:rotate(15deg);animation:ldTilt 1.8s cubic-bezier(.34,1.56,.64,1) infinite}
+    .ld-title{font-weight:800;font-size:17px;letter-spacing:-.01em}
+    .ld-sub{font-size:12px;color:#9B9DA0;margin-top:-10px}
+    .ld-track{width:170px;height:5px;border-radius:99px;background:#2B2D30;overflow:hidden;position:relative}
+    .ld-bar{position:absolute;inset:0 auto 0 0;width:46%;border-radius:99px;background:linear-gradient(90deg,#00B06F,#38BDF8,#A855F7);animation:ldSlide 1.15s cubic-bezier(.4,0,.2,1) infinite}
+    @keyframes ldIn{from{opacity:0;transform:translateY(12px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes ldFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    @keyframes ldTilt{0%,100%{transform:rotate(15deg) scale(1)}50%{transform:rotate(30deg) scale(1.08)}}
+    @keyframes ldPulse{0%{transform:scale(.96);opacity:.8}100%{transform:scale(1.24);opacity:0}}
+    @keyframes ldSlide{0%{transform:translateX(-110%)}100%{transform:translateX(260%)}}
+    @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
   </style>
 </head>
 <body>
-  <div id="ld"><div class="spin"></div><div style="font-weight:700">Carregando StudyBlox...</div></div>
+  <div id="ld" class="ld-wrap">
+    <div class="ld-orb"><div class="ld-mark"></div></div>
+    <div class="ld-title">StudyBlox</div>
+    <div class="ld-sub">Preparando sua jornada de estudos...</div>
+    <div class="ld-track"><div class="ld-bar"></div></div>
+  </div>
   <script>
     (async () => {
       try {
         const ts = Date.now();
         const parts = await Promise.all(['p1.txt','p2.txt','p3.txt','p4.txt'].map(f =>
-          fetch('./' + f + '?v=4&' + ts, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(f + ' não encontrado'); return r.text(); })
+          fetch('./' + f + '?v=5&' + ts, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(f + ' não encontrado'); return r.text(); })
         ));
         const b64 = parts.map(t => t.replace(/\s+/g, '')).join('');
         const bin = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
