@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>AprovaEM — Plataforma de Estudos (Ensino Médio &amp; ENEM)</title>
+  <title>Aprova Estudos — Plataforma Completa de Estudos</title>
   <meta name="theme-color" content="#0B101B" />
   <style>
     *{box-sizing:border-box}
@@ -27,7 +27,7 @@
     <div class="ld-orb">
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 8l10 5 10-5-10-5Z"/><path d="M6 10.5v5.5c0 1.8 2.7 3.5 6 3.5s6-1.7 6-3.5v-5.5"/></svg>
     </div>
-    <div class="ld-title">AprovaEM</div>
+    <div class="ld-title">Aprova Estudos</div>
     <div class="ld-sub">Carregando Mapa de Ciclos e Rotina...</div>
     <div class="ld-track"><div class="ld-bar"></div></div>
   </div>
@@ -36,7 +36,7 @@
       try {
         const ts = Date.now();
         const parts = await Promise.all(['p1.txt','p2.txt','p3.txt','p4.txt'].map(f =>
-          fetch('./' + f + '?v=13&' + ts, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(f + ' não encontrado'); return r.text(); })
+          fetch('./' + f + '?v=14&' + ts, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(f + ' não encontrado'); return r.text(); })
         ));
         const b64 = parts.map(t => t.replace(/\s+/g, '')).join('');
         const bin = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
