@@ -43,7 +43,7 @@
   <script>
     (async () => {
       try {
-        const v = '24';
+        const v = '25';
         const parts = await Promise.all(['p1.txt','p2.txt','p3.txt','p4.txt'].map(f =>
           fetch('./' + f + '?v=' + v).then(r => { if (!r.ok) throw new Error(f + ' não encontrado'); return r.text(); })
         ));
