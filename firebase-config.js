@@ -6,10 +6,11 @@
 // Estas chaves são públicas por padrão no Firebase; a segurança é garantida
 // pelas Regras do Cloud Firestore (cada aluno acessa apenas o próprio UID).
 window.APROVA_FIREBASE_CONFIG = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyAudLty2cGrhcfTfIDPpf1AhmQ-qT-CClk",
+  authDomain: "estudos-f098c.firebaseapp.com",
+  projectId: "estudos-f098c",
+  storageBucket: "estudos-f098c.firebasestorage.app",
+  messagingSenderId: "240101524449",
+  appId: "1:240101524449:web:ed7b93a59ffb94fd0308a0",
+  measurementId: "G-L68RB0N5P9"
 };
