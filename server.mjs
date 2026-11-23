@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ActiveReviewError, DEFAULT_GEMINI_MODEL, generateActiveReview } from './lib/generate-quiz-service.mjs';
+import { searchYouTubeVideos } from './lib/youtube-search-core.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const MAX_BODY_BYTES = 64 * 1024;
@@ -101,6 +102,21 @@ export function createAppServer() {
         aiConfigured: Boolean(String(process.env.GEMINI_API_KEY || '').trim()),
         defaultModel: String(process.env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL).trim() || DEFAULT_GEMINI_MODEL
       });
+      return;
+    }
+
+    if (pathname === '/api/youtube-search') {
+      if (req.method !== 'GET') {
+        sendJson(res, 405, { error: 'Método não permitido. Use GET.', code: 'METHOD_NOT_ALLOWED' });
+        return;
+      }
+      const q = String(url.searchParams.get('q') || '').trim();
+      if (!q) {
+        sendJson(res, 400, { ok: false, results: [], error: 'Informe o parâmetro q.' });
+        return;
+      }
+      const data = await searchYouTubeVideos(q, { maxResults: 5 });
+      sendJson(res, 200, data);
       return;
     }
 
